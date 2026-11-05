@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXORA — Online Work OS</title>
+<style>
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#0b1020;
+  color:#f4f5ff;
+}
+header {
+  padding:20px;
+  border-bottom:1px solid #293047;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo {font-size:23px;font-weight:bold;color:#9b8cff}
+main {padding:20px;max-width:900px;margin:auto}
+h1 {font-size:27px}
+.muted {color:#9ba4bc}
+.grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin:20px 0;
+}
+.card {
+  background:#171f35;
+  border:1px solid #303b58;
+  border-radius:14px;
+  padding:17px;
+}
+.card h3 {margin-top:0}
+button {
+  background:#7865ed;
+  color:white;
+  border:0;
+  border-radius:9px;
+  padding:11px 15px;
+  cursor:pointer;
+}
+input {
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  background:#10182c;
+  border:1px solid #35405c;
+  color:white;
+  border-radius:8px;
+}
+.task {
+  padding:12px 0;
+  border-bottom:1px solid #303b58;
+}
+@media(max-width:520px) {
+  .grid {grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">NEXORA</div>
+  <span class="muted">ONLINE WORK OS</span>
+</header>
+
+<main>
+  <p class="muted">YOUR DIGITAL WORKSPACE</p>
+  <h1>Everything starts here.</h1>
+  <p class="muted">Plan. Create. Automate. Grow.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>🎬 Creator Studio</h3>
+      <p class="muted">Manage ideas and content.</p>
+      <button onclick="show('Creator Studio')">Open</button>
+    </div>
+    <div class="card">
+      <h3>⚡ Automation</h3>
+      <p class="muted">Manage repetitive workflows.</p>
+      <button onclick="show('Automation')">Open</button>
+    </div>
+    <div class="card">
+      <h3>💼 Freelancer Hub</h3>
+      <p class="muted">Organise clients and projects.</p>
+      <button onclick="show('Freelancer Hub')">Open</button>
+    </div>
+    <div class="card">
+      <h3>📚 Student Space</h3>
+      <p class="muted">Organise study and assignments.</p>
+      <button onclick="show('Student Space')">Open</button>
+    </div>
+  </div>
+
+  <section class="card">
+    <h3>📝 Quick Task Manager</h3>
+    <input id="taskInput" placeholder="Enter a task...">
+    <button onclick="addTask()">Add task</button>
+    <div id="tasks"></div>
+  </section>
+
+  <section class="card" style="margin-top:15px">
+    <h3>🤖 NEXORA AI Assistant</h3>
+    <p class="muted">Your future AI-powered work assistant.</p>
+    <input id="question" placeholder="What do you want help with?">
+    <button onclick="ask()">Submit</button>
+    <p id="answer" class="muted"></p>
+  </section>
+</main>
+
+<script>
+function show(section) {
+  alert(section + " module selected. Coming soon!");
+}
+
+function addTask() {
+  const input = document.getElementById("taskInput");
+  if (!input.value.trim()) return;
+
+  const item = document.createElement("div");
+  item.className = "task";
+
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.style.width = "auto";
+
+  const label = document.createElement("span");
+  label.textContent = " " + input.value;
+
+  item.append(checkbox,label);
+  document.getElementById("tasks").appendChild(item);
+  input.value = "";
+}
+
+function ask() {
+  const question = document.getElementById("question").value;
+  document.getElementById("answer").textContent =
+    question.trim()
+    ? "AI integration will be connected in a future version."
+    : "Enter a question first.";
+}
+</script>
+
+</body>
+</html>
