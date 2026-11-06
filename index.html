@@ -1,243 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7f8fa">
+<title>FLUX — Workspace</title>
 
-<<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#10131c">
-<title>FLUX — Online Work OS</title>
 <style>
-:root{--bg:#0d1018;--panel:#151a26;--panel2:#1b2231;--line:#293247;--text:#eef2ff;--muted:#98a4bb;--accent:#8b7cff;--accent2:#4dd6b5;--danger:#ff7888}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 75% -10%,#29244b 0,transparent 34%),var(--bg);color:var(--text);font:15px/1.5 Inter,system-ui,Arial,sans-serif}
-button,input,textarea,select{font:inherit}button{cursor:pointer}.shell{display:grid;grid-template-columns:245px 1fr;min-height:100vh}.side{background:#10141f;border-right:1px solid var(--line);padding:24px 16px;position:sticky;top:0;height:100vh}.brand{font-size:24px;font-weight:850;letter-spacing:3px}.brand span{color:var(--accent)}.tag{color:var(--muted);font-size:11px;letter-spacing:2px;margin:0 0 28px 2px}.navlabel{font-size:10px;color:#77839b;letter-spacing:1.8px;margin:22px 10px 8px}.nav button{display:flex;align-items:center;gap:12px;width:100%;border:0;background:transparent;color:#aeb9ce;text-align:left;padding:11px 12px;border-radius:11px;margin:3px 0}.nav button.active,.nav button:hover{background:#24233d;color:#fff}.nav .ico{width:20px;text-align:center}.sidebottom{position:absolute;bottom:18px;left:18px;right:18px;color:var(--muted);font-size:12px}.main{padding:30px;max-width:1450px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:28px}.eyebrow{color:var(--accent2);font-size:11px;letter-spacing:2px;font-weight:700}.top h1{font-size:29px;margin:4px 0}.sub{color:var(--muted)}.userpill{border:1px solid var(--line);padding:9px 13px;border-radius:30px;color:#c8d1e2;font-size:12px}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.card{background:linear-gradient(145deg,#191f2d,#141925);border:1px solid var(--line);border-radius:17px;padding:19px;min-width:0}.span3{grid-column:span 3}.span4{grid-column:span 4}.span5{grid-column:span 5}.span6{grid-column:span 6}.span7{grid-column:span 7}.span8{grid-column:span 8}.span12{grid-column:span 12}.stat{font-size:28px;font-weight:800;margin-top:8px}.muted{color:var(--muted)}.card h3{margin:0 0 12px;font-size:15px}.cardhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.btn{background:var(--accent);border:0;color:white;padding:9px 13px;border-radius:10px;font-weight:650;font-size:13px}.btn.secondary{background:#252d40;border:1px solid var(--line);color:#dce4f5}.btn.ghost{background:transparent;border:1px solid var(--line);color:#dce4f5}.btn.danger{background:#482632;color:#ffdce1}.actions{display:flex;gap:8px;flex-wrap:wrap}.field{width:100%;background:#0f1420;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 11px;outline:none}.field:focus{border-color:var(--accent)}label{display:block;font-size:12px;color:var(--muted);margin:10px 0 5px}.formrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}.item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid #252d3e}.item:last-child{border-bottom:0}.item strong{font-size:13px}.pill{font-size:10px;padding:4px 8px;border-radius:30px;background:#292747;color:#c9c2ff;white-space:nowrap}.pill.green{background:#173b36;color:#8cebd4}.pill.orange{background:#443421;color:#ffd28b}.empty{color:#8290a8;text-align:center;padding:22px 8px;font-size:13px}.progress{height:7px;background:#252d3d;border-radius:10px;overflow:hidden;margin-top:10px}.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:45%}.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.quick button{background:#1b2231;border:1px solid var(--line);border-radius:12px;color:#e7ecf8;padding:15px 8px;text-align:left}.quick b{display:block;margin-top:7px;font-size:12px}.quick span{font-size:20px}.view{display:none}.view.active{display:block}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;padding:11px 8px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-weight:600}.checkrow{display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}.checkrow input{accent-color:var(--accent)}.notice{padding:12px;border:1px solid #554b2d;background:#2a2519;color:#e9d6a1;border-radius:11px;font-size:12px;margin-top:12px}.footer{color:#64718a;font-size:11px;margin-top:25px}
-@media(max-width:850px){.shell{grid-template-columns:1fr}.side{height:auto;position:relative;padding:15px;border-right:0;border-bottom:1px solid var(--line)}.tag{margin-bottom:12px}.nav{display:flex;overflow:auto;gap:4px}.navlabel,.sidebottom{display:none}.nav button{white-space:nowrap;width:auto;padding:9px}.main{padding:20px 14px}.span3,.span4,.span5,.span6,.span7,.span8{grid-column:span 12}.quick{grid-template-columns:repeat(2,1fr)}.top h1{font-size:24px}}
-</style>
-</head>
-<body>
-<div class="shell">
-<aside class="side">
-  <div class="brand">FLU<span>X</span></div><div class="tag">YOUR ONLINE WORK OS</div>
-  <div class="navlabel">WORKSPACE</div>
-  <nav class="nav" id="nav">
-    <button class="active" data-view="overview"><span class="ico">⌂</span>Overview</button>
-    <button data-view="creator"><span class="ico">▣</span>Creator Studio</button>
-    <button data-view="business"><span class="ico">◇</span>Business Hub</button>
-    <button data-view="projects"><span class="ico">▤</span>Projects & Tasks</button>
-    <button data-view="automation"><span class="ico">⟳</span>Automation</button>
-    <button data-view="ai"><span class="ico">✧</span>AI Workspace</button>
-  </nav>
-  <div class="sidebottom">FLUX prototype · Your data stays in this browser</div>
-</aside>
-<main class="main">
-<header class="top"><div><div class="eyebrow">WORK SMARTER. BUILD FASTER.</div><h1 id="pageTitle">Your workspace</h1><div class="sub" id="pageSub">One place to organize your online work.</div></div><div class="userpill">● LOCAL WORKSPACE</div></header>
-
-<section class="view active" id="overview">
- <div class="grid">
-  <div class="card span3"><div class="muted">Open tasks</div><div class="stat" id="statTasks">0</div><div class="muted">Across your workspace</div></div>
-  <div class="card span3"><div class="muted">Content ideas</div><div class="stat" id="statIdeas">0</div><div class="muted">Saved for later</div></div>
-  <div class="card span3"><div class="muted">Active deals</div><div class="stat" id="statDeals">0</div><div class="muted">Sponsorship pipeline</div></div>
-  <div class="card span3"><div class="muted">Projects</div><div class="stat" id="statProjects">0</div><div class="muted">Currently tracked</div></div>
-  <div class="card span7"><div class="cardhead"><h3>Quick actions</h3><span class="pill">GET STARTED</span></div><div class="quick">
-   <button onclick="showView('creator')"><span>▣</span><b>Add content idea</b></button>
-   <button onclick="showView('business')"><span>◇</span><b>Track a brand deal</b></button>
-   <button onclick="showView('projects')"><span>✓</span><b>Create a task</b></button>
-   <button onclick="showView('automation')"><span>⟳</span><b>Explore workflows</b></button>
-  </div></div>
-  <div class="card span5"><div class="cardhead"><h3>Today's focus</h3><span class="pill green">PLAN</span></div><div id="focusList" class="muted">Add tasks in Projects & Tasks to see them here.</div></div>
-  <div class="card span6"><div class="cardhead"><h3>Recent tasks</h3><button class="btn ghost" onclick="showView('projects')">View all</button></div><div id="recentTasks"></div></div>
-  <div class="card span6"><div class="cardhead"><h3>Deal pipeline</h3><button class="btn ghost" onclick="showView('business')">Manage</button></div><div id="recentDeals"></div></div>
- </div>
-</section>
-
-<section class="view" id="creator">
- <div class="grid">
-  <div class="card span5"><h3>Save a content idea</h3><form id="ideaForm"><label>Idea or working title</label><input class="field" id="ideaTitle" required placeholder="e.g. 5 free AI tools for students"><label>Platform</label><select class="field" id="ideaPlatform"><option>YouTube</option><option>Instagram</option><option>Blog</option><option>Other</option></select><label>Notes (optional)</label><textarea class="field" id="ideaNotes" rows="3" placeholder="Hook, outline or research notes"></textarea><div style="margin-top:12px"><button class="btn">Save idea</button></div></form></div>
-  <div class="card span7"><div class="cardhead"><h3>Content pipeline</h3><span class="pill">YOUR IDEAS</span></div><div id="ideasList"></div></div>
-  <div class="card span12"><h3>Creator workflow checklist</h3><div class="formrow"><div id="creatorChecks"></div><div class="notice">This checklist is a planning aid. FLUX does not publish to YouTube or Instagram automatically yet. Platform integrations require secure accounts and backend services.</div></div></div>
- </div>
-</section>
-
-<section class="view" id="business">
- <div class="grid">
-  <div class="card span5"><h3>Add a brand deal / client</h3><form id="dealForm"><label>Brand or client</label><input class="field" id="dealBrand" required placeholder="Brand name"><div class="formrow"><div><label>Deal value (₹)</label><input class="field" id="dealValue" type="number" min="0" placeholder="5000"></div><div><label>Status</label><select class="field" id="dealStatus"><option>New lead</option><option>Contacted</option><option>Negotiating</option><option>Confirmed</option><option>Completed</option><option>Paid</option></select></div></div><label>Deadline / follow-up date</label><input class="field" id="dealDate" type="date"><label>Notes</label><textarea class="field" id="dealNotes" rows="2" placeholder="Deliverables, contact notes, terms"></textarea><div style="margin-top:12px"><button class="btn">Add to pipeline</button></div></form></div>
-  <div class="card span7"><div class="cardhead"><h3>Brand deal pipeline</h3><span class="pill">CRM</span></div><div id="dealsList"></div></div>
-  <div class="card span12"><h3>Payment & delivery reminder</h3><div class="muted">Track agreed deliverables, invoice references and payment status in the notes. Do not store bank details, passwords, or sensitive payment information here.</div></div>
- </div>
-</section>
-
-<section class="view" id="projects">
- <div class="grid">
-  <div class="card span5"><h3>Create a task</h3><form id="taskForm"><label>Task</label><input class="field" id="taskTitle" required placeholder="What needs to get done?"><div class="formrow"><div><label>Category</label><select class="field" id="taskCategory"><option>General</option><option>Creator</option><option>Business</option><option>Study</option></select></div><div><label>Due date</label><input class="field" id="taskDate" type="date"></div></div><div style="margin-top:12px"><button class="btn">Add task</button></div></form></div>
-  <div class="card span7"><div class="cardhead"><h3>Task board</h3><span class="pill">TO DO</span></div><div id="tasksList"></div></div>
-  <div class="card span12"><h3>Projects</h3><form id="projectForm" class="formrow"><div><label>Project name</label><input class="field" id="projectName" required placeholder="e.g. Launch a YouTube channel"></div><div style="align-self:end"><button class="btn">Create project</button></div></form><div id="projectsList"></div></div>
- </div>
-</section>
-
-<section class="view" id="automation">
- <div class="grid">
-  <div class="card span12"><div class="cardhead"><h3>Workflow ideas</h3><span class="pill orange">PLANNING MODE</span></div><div class="muted">Choose a repetitive process and document its trigger, steps and result. These are workflow plans, not live integrations yet.</div></div>
-  <div class="card span4"><h3>Content repurposing</h3><p class="muted">Turn one long video into a checklist of short-form clips, captions and posts.</p><button class="btn secondary" onclick="addWorkflow('Content repurposing')">Add workflow</button></div>
-  <div class="card span4"><h3>Client follow-up</h3><p class="muted">Plan reminders for unanswered proposals and upcoming deliverables.</p><button class="btn secondary" onclick="addWorkflow('Client follow-up')">Add workflow</button></div>
-  <div class="card span4"><h3>Weekly planning</h3><p class="muted">Create a weekly review of tasks, deadlines and content ideas.</p><button class="btn secondary" onclick="addWorkflow('Weekly planning')">Add workflow</button></div>
-  <div class="card span12"><h3>My workflow plans</h3><div id="workflowList" class="muted">No workflows saved yet.</div><div class="notice">Real automation (sending emails, publishing posts, syncing calendars) needs backend infrastructure, user authorization and integrations. This prototype does not run background automations.</div></div>
- </div>
-</section>
-
-<section class="view" id="ai">
- <div class="grid">
-  <div class="card span7"><h3>AI writing workspace</h3><p class="muted">Draft a prompt you can use with an AI assistant. This starter version prepares prompts locally; it does not connect to an AI API.</p><label>What do you want help with?</label><select class="field" id="aiType"><option value="video">YouTube video outline</option><option value="post">Social media post</option><option value="research">Research plan</option><option value="business">Client proposal</option></select><label>Topic or context</label><textarea class="field" id="aiTopic" rows="4" placeholder="Describe your topic, audience and goal..."></textarea><div class="actions" style="margin-top:12px"><button class="btn" onclick="makePrompt()">Create prompt</button><button class="btn secondary" onclick="copyPrompt()">Copy prompt</button></div></div>
-  <div class="card span5"><h3>Generated prompt</h3><textarea class="field" id="aiOutput" rows="12" placeholder="Your prompt will appear here..."></textarea><div class="muted" style="font-size:11px;margin-top:9px">Copy this into your preferred AI tool. Never paste passwords or private customer data.</div></div>
- </div>
-</section>
-<div class="footer">FLUX prototype v1 · Information is stored in this browser only. Clearing browser data may erase it. No account, cloud sync, payments or live AI integrations are connected yet.</div>
-</main>
-</div>
-<script>
-const $=id=>document.getElementById(id);
-const load=(k)=>{try{return JSON.parse(localStorage.getItem('flux_'+k)||'[]')}catch{return[]}};
-const save=(k,v)=>localStorage.setItem('flux_'+k,JSON.stringify(v));
-let tasks=load('tasks'),ideas=load('ideas'),deals=load('deals'),projects=load('projects'),workflows=load('workflows');
-const titles={overview:['Your workspace','One place to organize your online work.'],creator:['Creator Studio','Plan content and keep your ideas moving.'],business:['Business Hub','Track clients, sponsorships and deal progress.'],projects:['Projects & Tasks','Keep deadlines and daily work organized.'],automation:['Automation Hub','Map repeatable workflows before connecting tools.'],ai:['AI Workspace','Prepare useful prompts for your AI tools.']};
-function showView(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id===v));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));$('pageTitle').textContent=titles[v][0];$('pageSub').textContent=titles[v][1];window.scrollTo(0,0)}
-$('nav').addEventListener('click',e=>{let b=e.target.closest('button[data-view]');if(b)showView(b.dataset.view)});
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function empty(msg){return `<div class="empty">${msg}</div>`}
-function render(){
-$('statTasks').textContent=tasks.filter(t=>!t.done).length;$('statIdeas').textContent=ideas.length;$('statDeals').textContent=deals.filter(d=>!['Paid','Completed'].includes(d.status)).length;$('statProjects').textContent=projects.length;
-$('tasksList').innerHTML=tasks.length?tasks.map((t,i)=>`<div class="item"><div><label style="margin:0"><input type="checkbox" ${t.done?'checked':''} onchange="toggleTask(${i})"> <strong style="${t.done?'text-decoration:line-through;color:#8490a5':''}">${esc(t.title)}</strong></label><div class="muted" style="font-size:11px">${esc(t.category)} ${t.date?'· '+esc(t.date):''}</div></div><button class="btn danger" onclick="deleteTask(${i})">×</button></div>`).join(''):empty('No tasks yet. Add your first task above.');
-$('recentTasks').innerHTML=tasks.filter(t=>!t.done).slice(0,4).map(t=>`<div class="item"><strong>${esc(t.title)}</strong><span class="pill">${esc(t.category)}</span></div>`).join('')||empty('No open tasks.');
-$('focusList').innerHTML=tasks.filter(t=>!t.done).slice(0,3).map(t=>`<div class="item"><strong>${esc(t.title)}</strong><span class="muted">${esc(t.date||'No date')}</span></div>`).join('')||'Add tasks in Projects & Tasks to see them here.';
-$('ideasList').innerHTML=ideas.length?ideas.map((x,i)=>`<div class="item"><div><strong>${esc(x.title)}</strong><div class="muted" style="font-size:11px">${esc(x.platform)}${x.notes?' · '+esc(x.notes):''}</div></div><button class="btn danger" onclick="deleteIdea(${i})">×</button></div>`).join(''):empty('Your saved content ideas will appear here.');
-$('dealsList').innerHTML=deals.length?deals.map((d,i)=>`<div class="item"><div><strong>${esc(d.brand)}</strong><div class="muted" style="font-size:11px">${d.value?'₹'+Number(d.value).toLocaleString('en-IN')+' · ':''}${esc(d.date||'No deadline')}${d.notes?' · '+esc(d.notes):''}</div></div><div class="actions"><select class="field" style="width:auto;padding:6px" onchange="changeDeal(${i},this.value)">${['New lead','Contacted','Negotiating','Confirmed','Completed','Paid'].map(s=>`<option ${d.status===s?'selected':''}>${s}</option>`).join('')}</select><button class="btn danger" onclick="deleteDeal(${i})">×</button></div></div>`).join(''):empty('No deals yet. Add a brand or client to start tracking.');
-$('recentDeals').innerHTML=deals.slice(0,4).map(d=>`<div class="item"><strong>${esc(d.brand)}</strong><span class="pill ${d.status==='Paid'?'green':''}">${esc(d.status)}</span></div>`).join('')||empty('No deals tracked yet.');
-$('projectsList').innerHTML=projects.length?projects.map((p,i)=>`<div class="item"><strong>${esc(p)}</strong><button class="btn danger" onclick="deleteProject(${i})">×</button></div>`).join(''):empty('No projects created yet.');
-$('workflowList').innerHTML=workflows.length?workflows.map((w,i)=>`<div class="item"><strong>${esc(w)}</strong><button class="btn danger" onclick="deleteWorkflow(${i})">×</button></div>`).join(''):empty('No workflows saved yet.');
-$('creatorChecks').innerHTML=['Research audience and topic','Write outline or script','Record or create content','Edit and prepare assets','Review title, thumbnail and description','Publish and review performance'].map((s,i)=>`<label class="checkrow"><input type="checkbox" class="creatorcheck"> ${s}</label>`).join('');
+:root {
+  --bg:#f7f8fa;
+  --surface:#ffffff;
+  --text:#20242b;
+  --muted:#777f8c;
+  --border:#e5e7eb;
+  --accent:#315b85;
+  --accent-light:#edf3f8;
+  --green:#24785b;
+  --red:#b94b4b;
 }
-$('ideaForm').addEventListener('submit',e=>{e.preventDefault();ideas.unshift({title:$('ideaTitle').value,platform:$('ideaPlatform').value,notes:$('ideaNotes').value});save('ideas',ideas);e.target.reset();render()});
-$('dealForm').addEventListener('submit',e=>{e.preventDefault();deals.unshift({brand:$('dealBrand').value,value:$('dealValue').value,status:$('dealStatus').value,date:$('dealDate').value,notes:$('dealNotes').value});save('deals',deals);e.target.reset();render()});
-$('taskForm').addEventListener('submit',e=>{e.preventDefault();tasks.unshift({title:$('taskTitle').value,category:$('taskCategory').value,date:$('taskDate').value,done:false});save('tasks',tasks);e.target.reset();render()});
-$('projectForm').addEventListener('submit',e=>{e.preventDefault();projects.unshift($('projectName').value);save('projects',projects);e.target.reset();render()});
-function toggleTask(i){tasks[i].done=!tasks[i].done;save('tasks',tasks);render()}function deleteTask(i){tasks.splice(i,1);save('tasks',tasks);render()}function deleteIdea(i){ideas.splice(i,1);save('ideas',ideas);render()}function changeDeal(i,s){deals[i].status=s;save('deals',deals);render()}function deleteDeal(i){deals.splice(i,1);save('deals',deals);render()}function deleteProject(i){projects.splice(i,1);save('projects',projects);render()}function addWorkflow(w){if(!workflows.includes(w)){workflows.push(w);save('workflows',workflows);render()}}function deleteWorkflow(i){workflows.splice(i,1);save('workflows',workflows);render()}
-function makePrompt(){let topic=$('aiTopic').value.trim();if(!topic){$('aiOutput').value='Please enter a topic or context first.';return}let type=$('aiType').value;let asks={video:'Create a clear YouTube video outline for this topic. Include a strong opening hook, logical sections, examples, and a useful ending. Avoid inventing facts.',post:'Draft an engaging social media post for this topic. Give 3 hook options, a concise main post, and a natural call to action. Avoid clickbait.',research:'Create a research plan for this topic. List key questions, reliable source types to consult, claims to verify, and possible counterarguments. Do not invent sources.',business:'Draft a professional client proposal for this context. Include the problem, proposed deliverables, timeline, assumptions, and questions to clarify. Do not invent prices or promises.'};$('aiOutput').value=asks[type]+'\\n\\nContext:\\n'+topic+'\\n\\nIf information is uncertain, clearly say so.'}
-function copyPrompt(){let v=$('aiOutput').value;if(!v)return; if(navigator.clipboard?.writeText){navigator.clipboard.writeText(v).then(()=>alert('Prompt copied.')).catch(()=>alert('Select and copy the prompt manually.'))}else{$('aiOutput').select();alert('Select and copy the prompt manually.')}}
-render();
-</script>
-</body></html>
+
+*{box-sizing:border-box}
+
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:14px;
 }
-.card {
-  background:#171f35;
-  border:1px solid #303b58;
-  border-radius:14px;
-  padding:17px;
+
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+
+.layout{
+  display:grid;
+  grid-template-columns:230px minmax(0,1fr);
+  min-height:100vh;
 }
-.card h3 {margin-top:0}
-button {
-  background:#7865ed;
-  color:white;
-  border:0;
-  border-radius:9px;
-  padding:11px 15px;
-  cursor:pointer;
+
+.sidebar{
+  background:#fff;
+  border-right:1px solid var(--border);
+  padding:25px 16px;
+  position:sticky;
+  top:0;
+  height:100vh;
 }
-input {
+
+.logo{
+  font-size:23px;
+  font-weight:800;
+  letter-spacing:2px;
+  padding:0 12px;
+}
+
+.logo span{color:var(--accent)}
+
+.logo-sub{
+  color:var(--muted);
+  font-size:10px;
+  letter-spacing:1.5px;
+  margin:5px 12px 35px;
+}
+
+.nav-title{
+  color:#9299a4;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:1.3px;
+  margin:20px 12px 9px;
+}
+
+.nav button{
+  display:flex;
+  align-items:center;
+  gap:12px;
   width:100%;
-  padding:12px;
+  padding:11px 12px;
+  border:0;
+  background:transparent;
+  color:#626b78;
+  text-align:left;
+  margin:3px 0;
+  border-radius:5px;
+}
+
+.nav button:hover,
+.nav button.active{
+  background:var(--accent-light);
+  color:var(--accent);
+}
+
+.nav-icon{
+  width:19px;
+  text-align:center;
+  font-size:16px;
+}
+
+.sidebar-bottom{
+  position:absolute;
+  bottom:20px;
+  left:25px;
+  color:#9299a4;
+  font-size:11px;
+}
+
+main{
+  width:100%;
+  max-width:1450px;
+  margin:auto;
+  padding:32px;
+}
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:30px;
+}
+
+.header h1{
+  font-size:27px;
+  margin:0 0 5px;
+  font-weight:650;
+  letter-spacing:-.6px;
+}
+
+.subtitle{color:var(--muted)}
+
+.workspace-label{
+  color:var(--muted);
+  font-size:11px;
+  border:1px solid var(--border);
+  padding:8px 11px;
+  background:#fff;
+}
+
+.view{display:none}
+.view.active{display:block}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(12,minmax(0,1fr));
+  gap:16px;
+}
+
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  padding:20px;
+  min-width:0;
+}
+
+.span3{grid-column:span 3}
+.span4{grid-column:span 4}
+.span5{grid-column:span 5}
+.span6{grid-column:span 6}
+.span7{grid-column:span 7}
+.span8{grid-column:span 8}
+.span12{grid-column:span 12}
+
+.card h3{
+  font-size:15px;
+  font-weight:650;
+  margin:0 0 16px;
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.stat-number{
+  font-size:30px;
+  font-weight:700;
   margin:8px 0;
-  background:#10182c;
-  border:1px solid #35405c;
+}
+
+.muted{color:var(--muted)}
+
+.card-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.btn{
+  background:var(--accent);
   color:white;
-  border-radius:8px;
+  border:1px solid var(--accent);
+  padding:9px 14px;
+  font-size:12px;
+  font-weight:600;
+  border-radius:4px;
 }
-.task {
+
+.btn:hover{opacity:.88}
+
+.btn.secondary{
+  background:white;
+  color:var(--text);
+  border-color:var(--border);
+}
+
+.btn.danger{
+  background:white;
+  color:var(--red);
+  border-color:var(--border);
+}
+
+.btn.small{padding:6px 9px}
+
+.field{
+  display:block;
+  width:100%;
+  padding:10px 11px;
+  border:1px solid #dfe2e7;
+  background:#fff;
+  color:var(--text);
+  outline:none;
+  border-radius:3px;
+}
+
+.field:focus{border-color:var(--accent)}
+
+label{
+  display:block;
+  font-size:12px;
+  color:#626b78;
+  margin:13px 0 6px;
+}
+
+textarea{resize:vertical}
+
+.form-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
+.item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
   padding:12px 0;
-  border-bottom:1px solid #303b58;
+  border-bottom:1px solid var(--border);
 }
-@media(max-width:520px) {
-  .grid {grid-template-columns:1fr}
+
+.item:last-child{border-bottom:0}
+
+.item strong{font-size:13px}
+
+.item small{
+  display:block;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+.status{
+  display:inline-block;
+  background:#edf3f8;
+  color:var(--accent);
+  padding:4px 8px;
+  font-size:10px;
+  white-space:nowrap;
+}
+
+.status.green{
+  background:#edf6f1;
+  color:var(--green);
+}
+
+.empty{
+  text-align:center;
+  color:var(--muted);
+  padding:24px 10px;
+  font-size:12px;
+}
+
+.quick-actions{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.quick-actions button{
+  padding:15px;
+  text-align:left;
+  background:#fff;
+  border:1px solid var(--border);
+  color:var(--text);
+}
+
+.quick-actions button:hover{
+  border-color:var(--accent);
+  background:#f8fafc;
+}
+
+.quick-actions strong{
+  display:block;
+  margin-top:7px;
+  font-size:12px;
+}
+
+.check-row{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:10px 0;
+  border-bottom:1px solid var(--border);
+  color:#626b78;
+  font-size:13px;
+}
+
+.check-row input{accent-color:var(--accent)}
+
+.notice{
+  padding:12px;
+  background:#f7f8fa;
+  border:1px solid var(--border);
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.6;
+  margin-top:15px;
+}
+
+.footer{
+  margin-top:30px;
+  color:#9299a4;
+  font-size:11px;
+}
+
+@media(max-width:850px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{
+    position:relative;
+    height:auto;
+    padding:15px;
+    border-right:0;
+    border-bottom:1px solid var(--border);
+  }
+  .logo-sub{margin-bottom:15px}
+  .nav{
+    display:flex;
+    overflow-x:auto;
+    gap:4px;
+  }
+  .nav button{
+    white-space:nowrap;
+    width:auto;
+    padding:9px;
+  }
+  .nav-title,.sidebar-bottom{display:none}
+  main{padding:22px 14px}
+  .span3,.span4,.span5,.span6,.span7,.span8{
+    grid-column:span 12;
+  }
+  .header h1{font-size:23px}
+  .workspace-label{font-size:9px}
+}
+
+@media(max-width:420px){
+  .form-row{grid-template-columns:1fr}
+  .quick-actions{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
+
 <body>
 
-<header>
-  <div class="logo">NEXORA</div>
-  <span class="muted">ONLINE WORK OS</span>
-</header>
+<div class="layout">
+
+<aside class="sidebar">
+  <div class="logo">FLU<span>X</span></div>
+  <div class="logo-sub">ONLINE WORKSPACE</div>
+
+  <div class="nav-title">WORKSPACE</div>
+
+  <nav class="nav" id="nav">
+    <button class="active" data-view="overview"><span class="nav-icon">⌂</span>Overview</button>
+    <button data-view="creator"><span class="nav-icon">▣</span>Creator Studio</button>
+    <button data-view="business"><span class="nav-icon">◇</span>Business Hub</button>
+    <button data-view="projects"><span class="nav-icon">▤</span>Projects & Tasks</button>
+    <button data-view="automation"><span class="nav-icon">⟳</span>Automation</button>
+    <button data-view="ai"><span class="nav-icon">✧</span>AI Workspace</button>
+  </nav>
+
+  <div class="sidebar-bottom">FLUX · Personal workspace</div>
+</aside>
 
 <main>
-  <p class="muted">YOUR DIGITAL WORKSPACE</p>
-  <h1>Everything starts here.</h1>
-  <p class="muted">Plan. Create. Automate. Grow.</p>
 
-  <div class="grid">
-    <div class="card">
-      <h3>🎬 Creator Studio</h3>
-      <p class="muted">Manage ideas and content.</p>
-      <button onclick="show('Creator Studio')">Open</button>
-    </div>
-    <div class="card">
-      <h3>⚡ Automation</h3>
-      <p class="muted">Manage repetitive workflows.</p>
-      <button onclick="show('Automation')">Open</button>
-    </div>
-    <div class="card">
-      <h3>💼 Freelancer Hub</h3>
-      <p class="muted">Organise clients and projects.</p>
-      <button onclick="show('Freelancer Hub')">Open</button>
-    </div>
-    <div class="card">
-      <h3>📚 Student Space</h3>
-      <p class="muted">Organise study and assignments.</p>
-      <button onclick="show('Student Space')">Open</button>
+<header class="header">
+  <div>
+    <h1 id="pageTitle">Overview</h1>
+    <div class="subtitle" id="pageSub">Manage your work from one place.</div>
+  </div>
+  <div class="workspace-label">PERSONAL WORKSPACE</div>
+</header>
+
+<!-- OVERVIEW -->
+
+<section class="view active" id="overview">
+
+<div class="grid">
+
+  <div class="card span3">
+    <div class="stat-label">Open tasks</div>
+    <div class="stat-number" id="statTasks">0</div>
+    <div class="muted">Tasks remaining</div>
+  </div>
+
+  <div class="card span3">
+    <div class="stat-label">Content ideas</div>
+    <div class="stat-number" id="statIdeas">0</div>
+    <div class="muted">Ideas saved</div>
+  </div>
+
+  <div class="card span3">
+    <div class="stat-label">Active deals</div>
+    <div class="stat-number" id="statDeals">0</div>
+    <div class="muted">Business pipeline</div>
+  </div>
+
+  <div class="card span3">
+    <div class="stat-label">Projects</div>
+    <div class="stat-number" id="statProjects">0</div>
+    <div class="muted">Projects created</div>
+  </div>
+
+  <div class="card span7">
+    <h3>Quick access</h3>
+    <div class="quick-actions">
+      <button onclick="showView('creator')">▣<strong>Content ideas</strong></button>
+      <button onclick="showView('business')">◇<strong>Brand deals</strong></button>
+      <button onclick="showView('projects')">✓<strong>Create a task</strong></button>
+      <button onclick="showView('automation')">⟳<strong>Workflows</strong></button>
     </div>
   </div>
 
-  <section class="card">
-    <h3>📝 Quick Task Manager</h3>
-    <input id="taskInput" placeholder="Enter a task...">
-    <button onclick="addTask()">Add task</button>
-    <div id="tasks"></div>
-  </section>
+  <div class="card span5">
+    <h3>Today's focus</h3>
+    <div id="focusList"></div>
+  </div>
 
-  <section class="card" style="margin-top:15px">
-    <h3>🤖 NEXORA AI Assistant</h3>
-    <p class="muted">Your future AI-powered work assistant.</p>
-    <input id="question" placeholder="What do you want help with?">
-    <button onclick="ask()">Submit</button>
-    <p id="answer" class="muted"></p>
-  </section>
+  <div class="card span6">
+    <div class="card-header">
+      <h3>Recent tasks</h3>
+      <button class="btn secondary small" onclick="showView('projects')">View all</button>
+    </div>
+    <div id="recentTasks"></div>
+  </div>
+
+  <div class="card span6">
+    <div class="card-header">
+      <h3>Recent business deals</h3>
+      <button class="btn secondary small" onclick="showView('business')">Manage</button>
+    </div>
+    <div id="recentDeals"></div>
+  </div>
+
+</div>
+</section>
+
+<!-- CREATOR STUDIO -->
+
+<section class="view" id="creator">
+<div class="grid">
+
+  <div class="card span5">
+    <h3>New content idea</h3>
+
+    <form id="ideaForm">
+      <label>Title</label>
+      <input class="field" id="ideaTitle" required placeholder="Enter your idea">
+
+      <label>Platform</label>
+      <select class="field" id="ideaPlatform">
+        <option>YouTube</option>
+        <option>Instagram</option>
+        <option>Blog</option>
+        <option>Other</option>
+      </select>
+
+      <label>Notes</label>
+      <textarea class="field" id="ideaNotes" rows="4" placeholder="Add your notes..."></textarea>
+
+      <div class="actions">
+        <button class="btn">Save idea</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card span7">
+    <h3>Content pipeline</h3>
+    <div id="ideasList"></div>
+  </div>
+
+  <div class="card span12">
+    <h3>Production checklist</h3>
+    <div id="creatorChecks"></div>
+  </div>
+
+</div>
+</section>
+
+<!-- BUSINESS HUB -->
+
+<section class="view" id="business">
+<div class="grid">
+
+  <div class="card span5">
+    <h3>Add a deal or client</h3>
+
+    <form id="dealForm">
+      <label>Brand / client name</label>
+      <input class="field" id="dealBrand" required placeholder="Enter name">
+
+      <div class="form-row">
+        <div>
+          <label>Deal value (₹)</label>
+          <input class="field" id="dealValue" type="number" min="0" placeholder="5000">
+        </div>
+        <div>
+          <label>Status</label>
+          <select class="field" id="dealStatus">
+            <option>New lead</option>
+            <option>Contacted</option>
+            <option>Negotiating</option>
+            <option>Confirmed</option>
+            <option>Completed</option>
+            <option>Paid</option>
+          </select>
+        </div>
+      </div>
+
+      <label>Follow-up date</label>
+      <input class="field" id="dealDate" type="date">
+
+      <label>Notes</label>
+      <textarea class="field" id="dealNotes" rows="3" placeholder="Details..."></textarea>
+
+      <div class="actions">
+        <button class="btn">Add deal</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card span7">
+    <h3>Deal pipeline</h3>
+    <div id="dealsList"></div>
+  </div>
+
+</div>
+</section>
+
+<!-- PROJECTS AND TASKS -->
+
+<section class="view" id="projects">
+<div class="grid">
+
+  <div class="card span5">
+    <h3>Create a task</h3>
+
+    <form id="taskForm">
+      <label>Task name</label>
+      <input class="field" id="taskTitle" required placeholder="What needs to be done?">
+
+      <label>Category</label>
+      <select class="field" id="taskCategory">
+        <option>General</option>
+        <option>Business</option>
+        <option>Content</option>
+        <option>Learning</option>
+        <option>Personal</option>
+      </select>
+
+      <label>Due date</label>
+      <input class="field" id="taskDate" type="date">
+
+      <div class="actions">
+        <button class="btn">Create task</button>
+      </div>
+    </form>
+
+    <hr style="border:0;border-top:1px solid var(--border);margin:25px 0">
+
+    <h3>New project</h3>
+
+    <form id="projectForm">
+      <input class="field" id="projectName" required placeholder="Project name">
+      <div class="actions">
+        <button class="btn secondary">Create project</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card span7">
+    <h3>Task list</h3>
+    <div id="tasksList"></div>
+  </div>
+
+  <div class="card span12">
+    <h3>My projects</h3>
+    <div id="projectsList"></div>
+  </div>
+
+</div>
+</section>
+
+<!-- AUTOMATION -->
+
+<section class="view" id="automation">
+<div class="grid">
+
+  <div class="card span12">
+    <h3>Workflow library</h3>
+    <p class="muted">Save repeatable processes that you want to organize or automate later.</p>
+  </div>
+
+  <div class="card span4">
+    <h3>Content repurposing</h3>
+    <p class="muted">Plan how to turn one long piece of content into shorter posts.</p>
+    <button class="btn secondary" onclick="addWorkflow('Content repurposing')">Add workflow</button>
+  </div>
+
+  <div class="card span4">
+    <h3>Client follow-up</h3>
+    <p class="muted">Keep track of unanswered proposals and client follow-ups.</p>
+    <button class="btn secondary" onclick="addWorkflow('Client follow-up')">Add workflow</button>
+  </div>
+
+  <div class="card span4">
+    <h3>Weekly planning</h3>
+    <p class="muted">Organize weekly tasks, deadlines and priorities.</p>
+    <button class="btn secondary" onclick="addWorkflow('Weekly planning')">Add workflow</button>
+  </div>
+
+  <div class="card span12">
+    <h3>My saved workflows</h3>
+    <div id="workflowList"></div>
+    <div class="notice">
+      These are workflow plans, not live automations. Connecting external apps and running automatic actions requires additional integrations and a backend.
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- AI WORKSPACE -->
+
+<section class="view" id="ai">
+<div class="grid">
+
+  <div class="card span6">
+    <h3>AI prompt builder</h3>
+    <p class="muted">Prepare structured prompts for your preferred AI assistant.</p>
+
+    <label>What do you need?</label>
+    <select class="field" id="aiType">
+      <option value="video">YouTube video outline</option>
+      <option value="post">Social media post</option>
+      <option value="research">Research plan</option>
+      <option value="business">Client proposal</option>
+    </select>
+
+    <label>Topic or context</label>
+    <textarea class="field" id="aiTopic" rows="6" placeholder="Describe what you want to create..."></textarea>
+
+    <div class="actions">
+      <button class="btn" onclick="makePrompt()">Generate prompt</button>
+      <button class="btn secondary" onclick="copyPrompt()">Copy prompt</button>
+    </div>
+  </div>
+
+  <div class="card span6">
+    <h3>Generated prompt</h3>
+    <textarea class="field" id="aiOutput" rows="13" placeholder="Your prompt will appear here..."></textarea>
+    <p class="muted" style="font-size:11px">This tool prepares prompts locally. It does not connect directly to an AI service.</p>
+  </div>
+
+</div>
+</section>
+
+<div class="footer">
+  FLUX Workspace · Your information is saved in this browser.
+</div>
+
 </main>
+</div>
 
 <script>
-function show(section) {
-  alert(section + " module selected. Coming soon!");
+const $ = id => document.getElementById(id);
+
+function load(key){
+  try {
+    return JSON.parse(localStorage.getItem("flux_"+key) || "[]");
+  } catch {
+    return [];
+  }
 }
 
-function addTask() {
-  const input = document.getElementById("taskInput");
-  if (!input.value.trim()) return;
-
-  const item = document.createElement("div");
-  item.className = "task";
-
-  const checkbox = document.createElement("input");
-  checkbox.type = "checkbox";
-  checkbox.style.width = "auto";
-
-  const label = document.createElement("span");
-  label.textContent = " " + input.value;
-
-  item.append(checkbox,label);
-  document.getElementById("tasks").appendChild(item);
-  input.value = "";
+function save(key,data){
+  localStorage.setItem("flux_"+key,JSON.stringify(data));
 }
 
-function ask() {
-  const question = document.getElementById("question").value;
-  document.getElementById("answer").textContent =
-    question.trim()
-    ? "AI integration will be connected in a future version."
-    : "Enter a question first.";
+let tasks=load("tasks");
+let ideas=load("ideas");
+let deals=load("deals");
+let projects=load("projects");
+let workflows=load("workflows");
+
+const pageInfo={
+  overview:["Overview","Manage your work from one place."],
+  creator:["Creator Studio","Organize content ideas and production."],
+  business:["Business Hub","Manage clients and business opportunities."],
+  projects:["Projects & Tasks","Keep your work organized."],
+  automation:["Automation","Plan repeatable workflows."],
+  ai:["AI Workspace","Prepare prompts for your AI tools."]
+};
+
+function showView(view){
+  document.querySelectorAll(".view").forEach(section=>{
+    section.classList.toggle("active",section.id===view);
+  });
+
+  document.querySelectorAll(".nav button").forEach(button=>{
+    button.classList.toggle("active",button.dataset.view===view);
+  });
+
+  $("pageTitle").textContent=pageInfo[view][0];
+  $("pageSub").textContent=pageInfo[view][1];
+
+  window.scrollTo(0,0);
 }
+
+$("nav").addEventListener("click",event=>{
+  const button=event.target.closest("[data-view]");
+  if(button) showView(button.dataset.view);
+});
+
+function escapeHTML(value){
+  return String(value??"").replace(/[&<>"']/g,char=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[char]);
+}
+
+function empty(message){
+  return `<div class="empty">${message}</div>`;
+}
+
+function render(){
+
+  $("statTasks").textContent=tasks.filter(t=>!t.done).length;
+  $("statIdeas").textContent=ideas.length;
+  $("statDeals").textContent=deals.filter(d=>!["Paid","Completed"].includes(d.status)).length;
+  $("statProjects").textContent=projects.length;
+
+  $("tasksList").innerHTML=tasks.length
+    ?tasks.map((t,i)=>`
+      <div class="item">
+        <div>
+          <label style="margin:0">
+            <input type="checkbox" ${t.done?"checked":""} onchange="toggleTask(${i})">
+            <strong style="${t.done?"text-decoration:line-through;color:#9299a4":""}">
+              ${escapeHTML(t.title)}
+            </strong>
+          </label>
+          <small>${escapeHTML(t.category)} ${t.date?"· "+escapeHTML(t.date):""}</small>
+        </div>
+        <button class="btn danger small" onclick="deleteTask(${i})">Delete</button>
+      </div>
+    `).join("")
+    :empty("No tasks yet. Create your first task.");
+
+  $("recentTasks").innerHTML=tasks.filter(t=>!t.done).slice(0,4)
+    .map(t=>`
+      <div class="item">
+        <strong>${escapeHTML(t.title)}</strong>
+        <span class="status">${escapeHTML(t.category)}</span>
+      </div>
+    `).join("")||empty("No open tasks.");
+
+  $("focusList").innerHTML=tasks.filter(t=>!t.done).slice(0,3)
+    .map(t=>`
+      <div class="item">
+        <strong>${escapeHTML(t.title)}</strong>
+        <small>${escapeHTML(t.date||"No due date")}</small>
+      </div>
+    `).join("")||empty("Your upcoming tasks will appear here.");
+
+  $("ideasList").innerHTML=ideas.length
+    ?ideas.map((idea,i)=>`
+      <div class="item">
+        <div>
+          <strong>${escapeHTML(idea.title)}</strong>
+          <small>${escapeHTML(idea.platform)}${idea.notes?" · "+escapeHTML(idea.notes):""}</small>
+        </div>
+        <button class="btn danger small" onclick="deleteIdea(${i})">Delete</button>
+      </div>
+    `).join("")
+    :empty("No content ideas saved yet.");
+
+  $("dealsList").innerHTML=deals.length
+    ?deals.map((deal,i)=>`
+      <div class="item">
+        <div>
+          <strong>${escapeHTML(deal.brand)}</strong>
+          <small>
+            ${deal.value?"₹"+Number(deal.value).toLocaleString("en-IN")+" · ":""}
+            ${escapeHTML(deal.date||"No deadline")}
+          </small>
+        </div>
+        <div class="actions" style="margin:0">
+          <select class="field" style="width:auto;padding:6px"
+            onchange="changeDeal(${i},this.value)">
+            ${["New lead","Contacted","Negotiating","Confirmed","Completed","Paid"].map(status=>`
+              <option ${deal.status===status?"selected":""}>${status}</option>
+            `).join("")}
+          </select>
+          <button class="btn danger small" onclick="deleteDeal(${i})">×</button>
+        </div>
+      </div>
+    `).join("")
+    :empty("No deals added yet.");
+
+  $("recentDeals").innerHTML=deals.slice(0,4).map(deal=>`
+    <div class="item">
+      <strong>${escapeHTML(deal.brand)}</strong>
+      <span class="status ${deal.status==="Paid"?"green":""}">${escapeHTML(deal.status)}</span>
+    </div>
+  `).join("")||empty("No business deals tracked.");
+
+  $("projectsList").innerHTML=projects.length
+    ?projects.map((project,i)=>`
+      <div class="item">
+        <strong>${escapeHTML(project)}</strong>
+        <button class="btn danger small" onclick="deleteProject(${i})">Delete</button>
+      </div>
+    `).join("")
+    :empty("No projects created yet.");
+
+  $("workflowList").innerHTML=workflows.length
+    ?workflows.map((workflow,i)=>`
+      <div class="item">
+        <strong>${escapeHTML(workflow)}</strong>
+        <button class="btn danger small" onclick="deleteWorkflow(${i})">Remove</button>
+      </div>
+    `).join("")
+    :empty("No workflows saved yet.");
+
+  $("creatorChecks").innerHTML=[
+    "Research the topic",
+    "Prepare an outline",
+    "Create the content",
+    "Edit and review",
+    "Prepare title and description",
+    "Publish and review performance"
+  ].map((item,i)=>`
+    <label class="check-row">
+      <input type="checkbox" class="creator-check">
+      ${item}
+    </label>
+  `).join("");
+}
+
+// SAVE CONTENT IDEA
+
+$("ideaForm").addEventListener("submit",event=>{
+  event.preventDefault();
+
+  ideas.unshift({
+    title:$("ideaTitle").value,
+    platform:$("ideaPlatform").value,
+    notes:$("ideaNotes").value
+  });
+
+  save("ideas",ideas);
+  event.target.reset();
+  render();
+});
+
+// SAVE BUSINESS DEAL
+
+$("dealForm").addEventListener("submit",event=>{
+  event.preventDefault();
+
+  deals.unshift({
+    brand:$("dealBrand").value,
+    value:$("dealValue").value,
+    status:$("dealStatus").value,
+    date:$("dealDate").value,
+    notes:$("dealNotes").value
+  });
+
+  save("deals",deals);
+  event.target.reset();
+  render();
+});
+
+// SAVE TASK
+
+$("taskForm").addEventListener("submit",event=>{
+  event.preventDefault();
+
+  tasks.unshift({
+    title:$("taskTitle").value,
+    category:$("taskCategory").value,
+    date:$("taskDate").value,
+    done:false
+  });
+
+  save("tasks",tasks);
+  event.target.reset();
+  render();
+});
+
+// SAVE PROJECT
+
+$("projectForm").addEventListener("submit",event=>{
+  event.preventDefault();
+
+  projects.unshift($("projectName").value);
+
+  save("projects",projects);
+  event.target.reset();
+  render();
+});
+
+// TASK ACTIONS
+
+function toggleTask(index){
+  tasks[index].done=!tasks[index].done;
+  save("tasks",tasks);
+  render();
+}
+
+function deleteTask(index){
+  tasks.splice(index,1);
+  save("tasks",tasks);
+  render();
+}
+
+// IDEA ACTIONS
+
+function deleteIdea(index){
+  ideas.splice(index,1);
+  save("ideas",ideas);
+  render();
+}
+
+// DEAL ACTIONS
+
+function changeDeal(index,status){
+  deals[index].status=status;
+  save("deals",deals);
+  render();
+}
+
+function deleteDeal(index){
+  deals.splice(index,1);
+  save("deals",deals);
+  render();
+}
+
+// PROJECT ACTIONS
+
+function deleteProject(index){
+  projects.splice(index,1);
+  save("projects",projects);
+  render();
+}
+
+// WORKFLOW ACTIONS
+
+function addWorkflow(name){
+  if(!workflows.includes(name)){
+    workflows.push(name);
+    save("workflows",workflows);
+    render();
+  }
+}
+
+function deleteWorkflow(index){
+  workflows.splice(index,1);
+  save("workflows",workflows);
+  render();
+}
+
+// AI PROMPT BUILDER
+
+function makePrompt(){
+
+  const topic=$("aiTopic").value.trim();
+
+  if(!topic){
+    alert("Enter a topic first.");
+    return;
+  }
+
+  const type=$("aiType").value;
+
+  const prompts={
+    video:"Create a professional YouTube video outline. Include an opening hook, main sections, useful examples and a strong conclusion. Do not invent facts.",
+
+    post:"Write an engaging social media post. Provide three hook options, a clear main post and a natural call to action. Avoid clickbait.",
+
+    research:"Create a research plan. Include important questions, reliable source types, facts to verify and possible counterarguments. Do not invent sources.",
+
+    business:"Create a professional client proposal. Include the client's problem, proposed solution, deliverables, timeline and questions that need clarification. Do not invent prices."
+  };
+
+  $("aiOutput").value=
+    prompts[type]+"\n\nContext:\n"+topic+
+    "\n\nKeep the response practical, clear and accurate.";
+}
+
+async function copyPrompt(){
+
+  const output=$("aiOutput");
+
+  if(!output.value){
+    alert("Generate a prompt first.");
+    return;
+  }
+
+  try{
+    await navigator.clipboard.writeText(output.value);
+    alert("Prompt copied.");
+  }catch{
+    output.select();
+    alert("Select and copy the prompt.");
+  }
+}
+
+render();
 </script>
 
 </body>
